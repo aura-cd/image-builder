@@ -1,8 +1,10 @@
-FROM alpine:latest
+FROM docker:dind-rootless
+
+USER root
+RUN addgroup -S builder && adduser -S -G builder builder
 
 RUN apk add --no-cache \
     git \
-    docker-cli \
     bash
 
 WORKDIR /app

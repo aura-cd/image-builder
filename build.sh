@@ -20,6 +20,11 @@ if [ -z "$DOCKER_REGISTRY" ]; then
   exit 1
 fi
 
+if [ -z "$DOCKER_REGISTRY_USER" ]; then
+  echo "DOCKER_REGISTRY_USERが設定されていません。"
+  exit 1
+fi
+
 if [ -z "$DOCKER_REGISTRY_PASSWORD" ]; then
   echo "DOCKER_REGISTRY_PASSWORDが設定されていません。"
   exit 1
