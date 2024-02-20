@@ -5,6 +5,8 @@ services:
     privileged: true
     environment:
       - GIT_REPO=
+      - DOCKER_BASE_DIR=
+      - DOCKER_FILE_PATH=
       - IMAGE_NAME=
       - IMAGE_TAG=
       - DOCKER_REGISTRY=ghcr.io
