@@ -1,5 +1,7 @@
 FROM docker:dind
 
+LABEL org.opencontainers.image.source=https://github.com/gantrycd/image-builder
+
 USER root
 RUN addgroup -S builder && adduser -S -G builder builder
 
