@@ -1,4 +1,4 @@
-FROM docker:dind-rootless
+FROM docker:dind
 
 USER root
 RUN addgroup -S builder && adduser -S -G builder builder
@@ -13,4 +13,4 @@ COPY build.sh /app/build.sh
 
 RUN chmod +x /app/build.sh
 
-CMD ["/app/build.sh"]
+ENTRYPOINT ["/app/build.sh"]

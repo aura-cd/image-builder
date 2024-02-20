@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    build: ./
+    privileged: true
+    environment:
+      - GIT_REPO=
+      - IMAGE_NAME=
+      - IMAGE_TAG=
+      - DOCKER_REGISTRY=ghcr.io
+      - DOCKER_REGISTRY_USER=xpadev-net
+      - DOCKER_REGISTRY_PASSWORD=

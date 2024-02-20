@@ -30,6 +30,14 @@ if [ -z "$DOCKER_REGISTRY_PASSWORD" ]; then
   exit 1
 fi
 
+/bin/bash -c "/bin/bash -c 'dockerd-entrypoint.sh'" > /dev/null &
+
+DOCKER_LOCK="/var/run/docker.sock"
+while [ ! -e $DOCKER_LOCK ]
+do
+  sleep 1
+done
+
 git clone $GIT_REPO source_code
 cd source_code
 
