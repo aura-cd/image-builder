@@ -30,6 +30,14 @@ if [ -z "$DOCKER_REGISTRY_PASSWORD" ]; then
   exit 1
 fi
 
+if [ -z "$DOCKER_BASE_DIR" ]; then
+    DOCKER_BASE_DIR="./"
+fi
+
+if [ -z "$DOCKER_FILE_PATH" ]; then
+    DOCKER_FILE_PATH="./Dockerfile"
+fi
+
 /bin/bash -c "/bin/bash -c 'dockerd-entrypoint.sh'" > /dev/null &
 
 DOCKER_LOCK="/var/run/docker.sock"
@@ -41,7 +49,7 @@ done
 git clone $GIT_REPO source_code
 cd source_code
 
-docker build -t $IMAGE_NAME:$IMAGE_TAG .
+docker build -t $IMAGE_NAME:$IMAGE_TAG -f $DOCKER_FILE_PATH $DOCKER_BASE_DIR
 
 echo $DOCKER_REGISTRY_PASSWORD | docker login $DOCKER_REGISTRY --username $DOCKER_REGISTRY_USER --password-stdin
 
