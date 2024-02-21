@@ -32,7 +32,7 @@ jobs:
       - uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ghcr.io/gantrycd/image-builder:${{RELEASE_VERSION}}
+          tags: ghcr.io/gantrycd/image-builder:$RELEASE_VERSION
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
