@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ -z "$GIT_REPO" ]; then
   echo "GIT_REPOが設定されていません。"
   exit 1
