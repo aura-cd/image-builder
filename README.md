@@ -3,6 +3,7 @@
 env
 ```
 GIT_REPO: ソースリポジトリ
+GIT_BRANCH: Gitブランチ名
 IMAGE_NAME: イメージ名
 IMAGE_TAG: イメージのタグ
 DOCKER_REGISTRY: push先のレジストリ

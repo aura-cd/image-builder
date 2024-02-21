@@ -49,6 +49,10 @@ done
 git clone $GIT_REPO source_code
 cd source_code
 
+if [ ! -z "$GIT_BRANCH" ]; then
+  git switch $GIT_BRANCH
+fi
+
 docker build -t $IMAGE_NAME:$IMAGE_TAG -f $DOCKER_FILE_PATH $DOCKER_BASE_DIR
 
 echo $DOCKER_REGISTRY_PASSWORD | docker login $DOCKER_REGISTRY --username $DOCKER_REGISTRY_USER --password-stdin
