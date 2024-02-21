@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ -z "$GIT_REPO" ]; then
   echo "GIT_REPOが設定されていません。"
   exit 1
@@ -58,3 +60,5 @@ docker build -t $IMAGE_NAME:$IMAGE_TAG -f $DOCKER_FILE_PATH $DOCKER_BASE_DIR
 echo $DOCKER_REGISTRY_PASSWORD | docker login $DOCKER_REGISTRY --username $DOCKER_REGISTRY_USER --password-stdin
 
 docker push $IMAGE_NAME:$IMAGE_TAG
+
+exit 0
