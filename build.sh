@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Starting build..."
+
 set -e
 
 if [ -z "$GIT_REPO" ]; then
@@ -33,20 +35,12 @@ if [ -z "$DOCKER_REGISTRY_PASSWORD" ]; then
 fi
 
 if [ -z "$DOCKER_BASE_DIR" ]; then
-    DOCKER_BASE_DIR="./"
+    DOCKER_BASE_DIR="/"
 fi
 
 if [ -z "$DOCKER_FILE_PATH" ]; then
-    DOCKER_FILE_PATH="./Dockerfile"
+    DOCKER_FILE_PATH="/Dockerfile"
 fi
-
-/bin/bash -c "/bin/bash -c 'dockerd-entrypoint.sh'" > /dev/null &
-
-DOCKER_LOCK="/var/run/docker.sock"
-while [ ! -e $DOCKER_LOCK ]
-do
-  sleep 1
-done
 
 git clone $GIT_REPO source_code
 cd source_code
@@ -55,10 +49,14 @@ if [ ! -z "$GIT_BRANCH" ]; then
   git switch $GIT_BRANCH
 fi
 
-docker build -t $IMAGE_NAME:$IMAGE_TAG -f $DOCKER_FILE_PATH $DOCKER_BASE_DIR
+echo "Create docker login file..."
+mkdir -p ~/.docker
+echo "{\"auths\": {\"$DOCKER_REGISTRY\": {\"username\": \"$DOCKER_REGISTRY_USER\",\"password\": \"$DOCKER_REGISTRY_PASSWORD\"}}}" > ~/.docker/config.json
 
-echo $DOCKER_REGISTRY_PASSWORD | docker login $DOCKER_REGISTRY --username $DOCKER_REGISTRY_USER --password-stdin
+echo "Building image..."
 
-docker push $IMAGE_NAME:$IMAGE_TAG
+/bin/bash /app/buildctl-daemonless.sh build --frontend dockerfile.v0 --local context=/app/source_code/$DOCKER_BASE_DIR --local dockerfile=/app/source_code/$DOCKER_BASE_DIR --output type=image,name=$IMAGE_NAME:$IMAGE_TAG,push=true
+
+echo "Image built successfully."
 
 exit 0

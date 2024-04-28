@@ -2,7 +2,6 @@ version: '3'
 services:
   web:
     build: ./
-    privileged: true
     environment:
       - GIT_REPO=
       - DOCKER_BASE_DIR=
