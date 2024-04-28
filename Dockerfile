@@ -1,6 +1,6 @@
 FROM moby/buildkit:master-rootless
 
-LABEL org.opencontainers.image.source=https://github.com/gantrycd/image-builder
+LABEL org.opencontainers.image.source=https://github.com/aura-cd/image-builder
 
 USER root
 
